@@ -1,0 +1,7 @@
+base   authmulti
+author Mizunashi Mana
+email  mizunashi_mana@mma.club.uec.ac.jp
+date   2016-03-20
+name   multiple auth plugin
+desc   Provides multiple authentication
+url    https://github.com/mizunashi-mana/authmulti#readme
