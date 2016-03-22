@@ -1,0 +1,26 @@
+{
+  "name": "dokuwiki/authmulti",
+  "description": "Multiple authentication plugin for DokuWiki",
+  "type": "dokuwiki-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mizunashi Mana",
+      "email": "mizunashi_mana@mma.club.uec.ac.jp"
+    }
+  ],
+  "require": {
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "phing/phing": "*",
+    "phpunit/phpunit": "5.2.*",
+    "phpmd/phpmd": "2.*",
+    "phpdocumentor/phpdocumentor": "2.*",
+    "squizlabs/php_codesniffer": "2.*",
+    "pdepend/pdepend": "2.*",
+    "phploc/phploc": "2.*",
+    "sebastian/phpcpd": "2.*",
+    "pear/versioncontrol_git": "@dev"
+  }
+}
