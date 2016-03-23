@@ -27,6 +27,7 @@
     "post-install-cmd": [
       "phing prepare"
     ],
+    "clean": "phing clean",
     "lint": "phing lint",
     "analyze": "phing analyze",
     "testOnly": "phing test",
