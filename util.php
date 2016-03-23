@@ -1,6 +1,8 @@
 <?php
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+/** must be run within Dokuwiki */
+if (!defined('DOKU_INC')) {
+  die();
+}
 
 /**
  * is array contained
@@ -9,18 +11,20 @@ if(!defined('DOKU_INC')) die();
  * @param array ... compare array
  * @return array
  */
- function array_contains($tarr, ...$carrs) {
-   $res = true;
-   
-   foreach($carrs as $carr) {
-     $_carr = array_intersect($tarr, $carr);
-     $res = $res && count($carr) == count($_carr);
-     
-     if (!$res) break;
-   }
-   
-   return $res;
- }
+function array_contains($tarr, ...$carrs) {
+  $res = true;
+
+  foreach ($carrs as $carr) {
+    $_carr = array_intersect($tarr, $carr);
+    $res = $res && count($carr) == count($_carr);
+
+    if (!$res) {
+      break;
+    }
+  }
+
+  return $res;
+}
 
 /**
  * get list of auth plugins

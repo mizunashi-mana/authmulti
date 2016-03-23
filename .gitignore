@@ -1,2 +1,6 @@
 # for composer
 /vendor/
+
+# for phing
+/logs/
+/reports/

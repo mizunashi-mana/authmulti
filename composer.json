@@ -13,7 +13,7 @@
     "php": ">=5.4"
   },
   "require-dev": {
-    "phing/phing": "*",
+    "phing/phing": "2.*",
     "phpunit/phpunit": "5.2.*",
     "phpmd/phpmd": "2.*",
     "phpdocumentor/phpdocumentor": "2.*",
@@ -22,5 +22,17 @@
     "phploc/phploc": "2.*",
     "sebastian/phpcpd": "2.*",
     "pear/versioncontrol_git": "@dev"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "phing prepare"
+    ],
+    "lint": "phing lint",
+    "analyze": "phing analyze",
+    "testOnly": "phing test",
+    "test": [
+      "@lint",
+      "@testOnly"
+    ]
   }
 }

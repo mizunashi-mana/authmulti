@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dokuwiki-authmulti" default="prepare" basedir=".">
+
+  <property name="basedir"   value="${project.basedir}" />
+  <property name="reportdir" value="${basedir}/reports" />
+  <property name="logdir"    value="${basedir}/logs"  />
+  <property name="docsdir"   value="${basedir}/docs" />
+  <property name="confdir"   value="${basedir}/build-configs" />
+
+  <target
+    name="lint" description="lint codes"
+    depends="phplint,phpcs,phpcpd,phpmd" />
+
+  <target
+    name="analyze" description="analyze code coverades"
+    depends="phploc" />
+
+  <target
+    name="test" description="test codes"
+    depends="phplint" />
+
+  <target name="clean" description="clean dirs">
+    <delete dir="${reportdir}" />
+    <delete dir="${logdir}" />
+  </target>
+
+  <target name="prepare" depends="clean" description="prepare for tasks">
+    <mkdir dir="${reportdir}" />
+    <mkdir dir="${logdir}" />
+  </target>
+
+  <target name="phplint" description="run PHP syntax check.">
+    <phplint>
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+    </phplint>
+  </target>
+
+  <target name="phpcs" description="run PHP code style check.">
+    <phpcodesniffer
+      standard="${confdir}/phpcs.xml"
+      encoding="utf-8"
+      allowedFileExtensions="php"
+      verbosity="1">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+      <formatter type="checkstyle" outfile="${reportdir}/phpcs.xml" />
+
+    </phpcodesniffer>
+  </target>
+
+  <target name="phpcpd" description="run PHP duplicate code check.">
+    <phpcpd
+      minTokens="20"
+      minLines="3">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+      <formatter type="default" usefile="false"/>
+      <formatter type="pmd" outfile="${reportdir}/pmd-cpd.xml" />
+
+    </phpcpd>
+  </target>
+
+  <target name="phpmd" description="check PHP mess detector factors">
+    <phpmd rulesets="${confdir}/phpmd.xml">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+      <formatter type="text" usefile="false" />
+      <formatter type="xml" outfile="${reportdir}/phpmd.xml" />
+
+    </phpmd>
+  </target>
+
+  <target name="phploc" description="analyze and measure the structure of PHP codes" >
+    <tstamp>
+      <format property="check.date.time" pattern="%Y%m%d-%H%M%S" locale="en_US"/>
+    </tstamp>
+    <phploc
+      countTests="true"
+      reportType="xml"
+      reportName="${check.date.time}-phploc.xml"
+      reportDirectory="${reportdir}">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+      <formatter type="cli" usefile="false" />
+
+    </phploc>
+  </target>
+
+</project>
