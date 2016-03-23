@@ -33,6 +33,7 @@
     "test": [
       "@lint",
       "@testOnly"
-    ]
+    ],
+    "docs": "phing docs"
   }
 }

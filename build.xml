@@ -13,11 +13,15 @@
 
   <target
     name="analyze" description="analyze code coverades"
-    depends="phploc" />
+    depends="phploc,phpdepend" />
 
   <target
     name="test" description="test codes"
     depends="phplint" />
+
+  <target
+    name="docs" description="generate docs"
+    depends="phpdoc" />
 
   <target name="clean" description="clean dirs">
     <delete dir="${reportdir}" />
@@ -27,6 +31,7 @@
   <target name="prepare" depends="clean" description="prepare for tasks">
     <mkdir dir="${reportdir}" />
     <mkdir dir="${logdir}" />
+    <mkdir dir="${docsdir}/phpdoc" />
   </target>
 
   <target name="phplint" description="run PHP syntax check.">
@@ -110,6 +115,45 @@
       <formatter type="cli" usefile="false" />
 
     </phploc>
+  </target>
+
+  <target name="phpdepend" description="analyze and measure the depends of PHP codes" >
+    <tstamp>
+      <format property="check.date.time" pattern="%Y%m%d-%H%M%S" locale="en_US"/>
+    </tstamp>
+    <phpdepend>
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+      <logger
+        type="jdepend-xml"
+        outfile="${reportdir}/pdepend-${check.date.time}.xml" />
+      <logger
+        type="jdepend-chart"
+        outfile="${reportdir}/pdepend-${check.date.time}.svg" />
+
+      <analyzer type="coderank-mode" value="method" />
+
+    </phpdepend>
+  </target>
+
+  <target name="phpdoc" description="generate documents">
+    <phpdoc2
+      title="Multi Auth Plugin Documentation"
+      destdir="${docsdir}/phpdoc"
+      template="responsive-twig">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+   </phpdoc2>
   </target>
 
 </project>

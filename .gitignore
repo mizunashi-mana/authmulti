@@ -4,3 +4,4 @@
 # for phing
 /logs/
 /reports/
+/docs/phpdoc/
