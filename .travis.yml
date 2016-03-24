@@ -6,6 +6,9 @@ cache:
   directory:
     - $HOME/.composer/cache
 
+before_install:
+  - rm -rf .php-version
+
 before_script:
   - composer install
 
