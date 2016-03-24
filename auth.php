@@ -53,7 +53,7 @@ class auth_plugin_authmulti extends DokuWiki_Auth_Plugin {
     $this->auth_plugins = array_map('loadAuthPlugin', $_plugins);
 
     foreach ($this->auth_plugins as $auth_plugin) {
-      if(!$auth_plugin || $auth_plugin->$success == false) {
+      if(!$auth_plugin || $auth_plugin->success == false) {
         $this->success = false;
         return;
       }
@@ -69,7 +69,7 @@ class auth_plugin_authmulti extends DokuWiki_Auth_Plugin {
     $this->cando['modMail']      = true;
     $this->cando['modGroups']    = true;
     $authplain_key = array_search('authplain', $_plugins);
-    if ($authplain_key != FALSE) {
+    if ($authplain_key != false) {
       $this->use_authplain = $this->auth_plugins[$authplain_key];
       $this->cando['addUser'] = $this->use_authplain->cando['addUser'];
     }
@@ -84,7 +84,7 @@ class auth_plugin_authmulti extends DokuWiki_Auth_Plugin {
    * @return bool
    */
   public function checkPass($user, $pass) {
-    foreach ($this->$auth_plugins as $auth_plugin) {
+    foreach ($this->auth_plugins as $auth_plugin) {
       if ($auth_plugin->checkPass($user, $pass)) {
         return true;
       }
