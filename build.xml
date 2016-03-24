@@ -129,6 +129,8 @@
         <exclude name="**/tests/**" />
       </fileset>
 
+      <formatter type="checkstyle" outfile="${reportdir}/phpcs.xml" />
+
     </phpcodesniffer>
   </target>
 
