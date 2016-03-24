@@ -165,4 +165,35 @@ class auth_plugin_authmulti extends DokuWiki_Auth_Plugin {
     return false;
   }
 
+  /**
+   * Remove one or more users from the list of registered users
+   *
+   * @param array $users
+   * @return int
+   */
+  public function deleteUsers($users) {
+    if(!is_array($users) || empty($users)) return 0;
+
+    $count = 0;
+    $tusers = $users;
+
+    foreach ($this->auth_plugins as $auth_plugin) {
+      $targets = array();
+      foreach ($tusers as $tuser) {
+        if ($auth_plugin->getUserData($tuser) != false) {
+          $targets[] = $tuser;
+        }
+      }
+      $tusers = array_diff($tusers, $targets);
+
+      if ($this->cando['delUser']) {
+        $count += $auth_plugin->deleteUsers($targets);
+      } else {
+        msg($this->getLang('notsupport'), -1);
+      }
+    }
+
+    return $count;
+  }
+
 }
