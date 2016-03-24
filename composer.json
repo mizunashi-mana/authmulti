@@ -32,8 +32,8 @@
     "analyze": "phing analyze",
     "testOnly": "phing test",
     "test": [
-      "@lint",
-      "@testOnly"
+      "phing lint-ci",
+      "phing test"
     ],
     "docs": "phing docs"
   }

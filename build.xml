@@ -12,12 +12,16 @@
     depends="phplint,phpcs,phpcpd,phpmd" />
 
   <target
+    name="lint-ci" description="lint codes"
+    depends="phplint-ci,phpcs-ci" />
+
+  <target
     name="analyze" description="analyze code coverades"
     depends="phploc,phpdepend" />
 
   <target
     name="test" description="test codes"
-    depends="phplint" />
+    depends="phplint-ci" />
 
   <target
     name="docs" description="generate docs"
@@ -94,6 +98,38 @@
       <formatter type="xml" outfile="${reportdir}/phpmd.xml" />
 
     </phpmd>
+  </target>
+
+  <target name="phplint-ci" description="run PHP syntax check.">
+    <phplint
+      haltonfailure="true"
+      deprecatedAsError="true">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+    </phplint>
+  </target>
+
+  <target name="phpcs-ci" description="run PHP code style check.">
+    <phpcodesniffer
+      standard="${confdir}/phpcs.xml"
+      encoding="utf-8"
+      allowedFileExtensions="php"
+      verbosity="1"
+      haltonerror="true"
+      haltonwarning="true">
+
+      <fileset dir="${basedir}">
+        <include name="**/*.php" />
+        <exclude name="**/vendor/**" />
+        <exclude name="**/tests/**" />
+      </fileset>
+
+    </phpcodesniffer>
   </target>
 
   <target name="phploc" description="analyze and measure the structure of PHP codes" >
