@@ -1,8 +1,4 @@
 <?php
-/** must be run within Dokuwiki */
-if (!defined('DOKU_INC')) {
-  die();
-}
 
 /**
  * is array contained
@@ -12,18 +8,15 @@ if (!defined('DOKU_INC')) {
  * @return array
  */
 function array_contains($tarr, ...$carrs) {
-  $res = true;
-
   foreach ($carrs as $carr) {
     $_carr = array_intersect($tarr, $carr);
-    $res = $res && count($carr) == count($_carr);
 
-    if (!$res) {
-      break;
+    if (count($carr) != count($_carr)) {
+      return false;
     }
   }
 
-  return $res;
+  return true;
 }
 
 /**
@@ -56,4 +49,21 @@ function isAuthPluginsEnabled($plugins) {
 function loadAuthPlugin($plugin) {
   global $plugin_controller;
   return $plugin_controller->load('auth', $plugin);
+}
+
+/**
+ * map field value to access string
+ *
+ * @param string $field
+ * @return string
+ */
+function getAccessString($field) {
+  $maps = [
+    'user' => 'modLogin',
+    'pass' => 'modPass',
+    'name' => 'modName',
+    'mail' => 'modMail',
+    'grps' => 'modGroups',
+  ];
+  return $maps[$field];
 }
